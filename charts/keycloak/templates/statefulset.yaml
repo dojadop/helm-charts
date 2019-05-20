@@ -112,6 +112,9 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+            - name: wildfly
+              containerPort: 9990
+              protocol: TCP
           {{- if $highAvailability }}
             - name: jgroups
               containerPort: 7600
@@ -122,14 +125,14 @@ spec:
           {{- end }}
           livenessProbe:
             httpGet:
-              path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/
-              port: http
+              path: /heatlh
+              port: wildfly
             initialDelaySeconds: {{ .Values.keycloak.livenessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.keycloak.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
-              path: {{ if ne .Values.keycloak.basepath "" }}/{{ .Values.keycloak.basepath }}{{ end }}/realms/master
-              port: http
+              path: /health
+              port: wildfly
             initialDelaySeconds: {{ .Values.keycloak.readinessProbe.initialDelaySeconds }}
             timeoutSeconds: {{ .Values.keycloak.readinessProbe.timeoutSeconds }}
           resources:

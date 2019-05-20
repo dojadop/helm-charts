@@ -16,6 +16,10 @@ spec:
       port: {{ .Values.keycloak.service.port }}
       targetPort: http
       protocol: TCP
+    - name: wildfly
+      port: 9990
+      targetPort: wildfly
+      protocol: TCP
   {{- if $highAvailability }}
     - name: jgroups
       port: {{ .Values.keycloak.service.jgroupsPort }}

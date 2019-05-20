@@ -16,7 +16,7 @@ data:
 
     /opt/jboss/keycloak/bin/jboss-cli.sh --file=/scripts/keycloak.cli
 
-    exec /opt/jboss/tools/docker-entrypoint.sh -b 0.0.0.0 {{ .Values.keycloak.extraArgs }}{{- if $highAvailability }} -c standalone-ha.xml{{ else }} -c standalone.xml{{ end }}
+    exec /opt/jboss/tools/docker-entrypoint.sh -b 0.0.0.0 -Djboss.bind.address.management=0.0.0.0 {{ .Values.keycloak.extraArgs }}{{- if $highAvailability }} -c standalone-ha.xml{{ else }} -c standalone.xml{{ end }}
     exit "$?"
 
   keycloak.cli: |
